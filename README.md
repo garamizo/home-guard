@@ -22,9 +22,15 @@ The measurements are available in a dashboard for monitoring and can be exported
 
 ![](https://howtomechatronics.com/wp-content/uploads/2016/01/DHT22-DHT11-Circuit-Schematics.png)
 
+In prototype implementation:
+
+<img src="img/device.jpg" width="500" />
+
 **Firmware**: Install [Influx-Arduino library](https://github.com/teebr/Influx-Arduino) and upload home-guard/Arduino/ambient_sensor into MCU.
 
-**IoT Stack**: Clone the [IoT Stack repository](https://github.com/gcgarner/IOTstack) on the server host and install InfluxDB, Telefraf, and Grafana via Docker Compose.
+**IoT Stack**: Clone the [IoT Stack repository](https://github.com/gcgarner/IOTstack) on the server host and install InfluxDB, Telefraf, and Grafana via Docker Compose. Finally, connect the server host to the local network and spin the docker-compose file.
+
+At this point, the device should be sending measurements to the DB server.
 
 ## Usage
 
