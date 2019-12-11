@@ -36,6 +36,8 @@ At this point, the device should be sending measurements to the DB server.
 
 **Monitoring**: Connect to home network and access Grafana on `http://serverhost:3000`. Login with `admin` and `<password>`, then access the *House* dashboard.
 
+<img src="img/dashboard.jpeg" width="450" />
+
 **Export ambient measurements**: On any terminal (from any host on the local network):
 
 ```bash
