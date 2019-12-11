@@ -1,90 +1,41 @@
 # home-guard
-Logs environmental data from your house
+Logs ambient data from your home.
 
-A microcontroller measures temperature and send the measurement to a server on the local network
-Upon receipt, server sends data to a timeseries database
-Finally, a dashboard displays the data on a browser
-
-Uses [ESP32-InfluxDB library](https://github.com/tobiasschuerg/ESP8266_Influx_DB/tree/v2) for Arduino IDE.
+A connected sensor measures room temperature and humidity and store it on a database server on the same local network.
+The measurements are available in a dashboard for monitoring and can be exported for post-processing.
 
 ## Hardware Components
 
-- Microcontroller Lollin32 Lite (based on ESP32)
-- Temperature sensor (#)
-- Ubuntu computer
+- Ambient sensor: [DHT-22](https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf)
+- Sensor MCU: [ESP32 Lollin32 Lite](https://wiki.wemos.cc/products:lolin32:lolin32_lite)
+- Server host: Raspberry Pi 2
 
 ## Software
 
-- MQTT library for ESP32: PubSubClient.h
-- MQTT broker: Mosquitto
-- Timeseries database and dashboard: InfluxDB 2.0
+- Database server: InfluxDB 1.7.8
+- Server agent: Telegraf
+- Data monitoring: Grafana
 
 ## Setup
 
-### Timeseries Database
+**Electrical Circuit**: Wire ambient sensor on MCU as described in [this tutorial](https://howtomechatronics.com/tutorials/arduino/dht11-dht22-sensors-temperature-and-humidity-tutorial-using-arduino/):
 
-Export token to bash. This is a password giving access to the database. Each token is created on InfluxDB, specifying the type of access (READ/WRITE) and to which buckets.
+![](https://howtomechatronics.com/wp-content/uploads/2016/01/DHT22-DHT11-Circuit-Schematics.png)
 
-```bash
-export INFLUX_TOKEN=cDXywLbr0AuFmj-ShQWe6WRVznERX7xjMwW6YnpsOypPCjLWcv-2kMAGlpRsaMPA6zbJ_zmLzypuK4wUk8VPbw==
-```
+**Firmware**: Install [Influx-Arduino library](https://github.com/teebr/Influx-Arduino) and upload home-guard/Arduino/ambient_sensor into MCU.
 
-Telegraf is a service to enable communication between InfluxDB and external applications in the network. Start a telegraf instance with
-
-```bash
-telegraf -config ./conf/mqtt_influx.conf
-```
-
-Start MQTT broker. This is a 
-
-```bash
-mosquitto
-```
-
-
-## Installation
-
-Python MQTT Library:
-
-```bash
-pip install paho.mqtt
-```
-
-
-
-## Resources
-
-- [InfluxDB 2.0](https://v2.docs.influxdata.com/v2.0/)
-- [InfluxDB 2.0 Example project](https://www.influxdata.com/blog/prototyping-iot-with-influxdb-cloud-2-0/)
-
-
-
-## Tutorials
-
-[The Definitive Guide To InfluxDB In 2019](https://devconnected.com/the-definitive-guide-to-influxdb-in-2019/)
+**IoT Stack**: Clone the [IoT Stack repository](https://github.com/gcgarner/IOTstack) on the server host and install InfluxDB, Telefraf, and Grafana via Docker Compose.
 
 ## Usage
 
-Launch Influx daemon
-Probably `influxd` is on the entrypoint
+**Monitoring**: Connect to home network and access Grafana on `http://serverhost:3000`. Login with `admin` and `<password>`, then access the *House* dashboard.
 
-'''bash
-docker run --name influxdb -p 9999:9999 quay.io/influxdb/influxdb:2.0.0-alpha
-'''
+**Export ambient measurements**: On any terminal (from any host on the local network):
 
-In another terminal
+```bash
+curl -G 'http://pi:8086/query?pretty=true' --data-urlencode "db=weather" --data-urlencode 'q=SELECT * FROM "ambient"' -H "Accept: application/csv"
+```
 
-'''bash
-docker exec -it influxdb /bin/bash
-'''
+## Resources
 
-## Real Usage
-
-$ influxd
-
-$ mosquitto
-
-$ export INFLUX_TOKEN=cDXywLbr0AuFmj-ShQWe6WRVznERX7xjMwW6YnpsOypPCjLWcv-2kMAGlpRsaMPA6zbJ_zmLzypuK4wUk8VPbw==
-$ telegraf -config telegraf.conf
-
-$ mosquitto_pub -t sensors/temperature -m "temp,someTag=tag1 val=80"
+[1] [IoT with an ESP32, InfluxDB and Grafana - Thomas Bruen](https://medium.com/@teebr/iot-with-an-esp32-influxdb-and-grafana-54abc9575fb2)
