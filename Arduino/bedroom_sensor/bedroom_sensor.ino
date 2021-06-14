@@ -38,7 +38,7 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 // E.g. http://192.168.1.48:8086 (In InfluxDB 2 UI -> Load Data -> Client Libraries), 
 #define INFLUXDB_URL "https://us-west-2-1.aws.cloud2.influxdata.com"
 // InfluxDB 2 server or cloud API authentication token (Use: InfluxDB UI -> Load Data -> Tokens -> <select token>)
-#define INFLUXDB_TOKEN "ircXlh52T11R1xepN9t1QEiL_7SoMiO2U6Y0s438TxWW0JzztsGX1W_q5UHQyHILsjuFoSM2OA-aosI6nElrXQ=="
+#define INFLUXDB_TOKEN MY_INFLUXDB_TOKEN
 // InfluxDB 2 organization id (Use: InfluxDB UI -> Settings -> Profile -> <name under tile> )
 #define INFLUXDB_ORG "garamizo@mtu.edu"
 // InfluxDB 2 bucket name (Use: InfluxDB UI -> Load Data -> Buckets)
