@@ -27,7 +27,7 @@ In prototype implementation:
 
 <img src="img/circuit.png" width="500" />
 
-**Firmware**: Setup your cloud database, install [4-5] and modify home-guard/Arduino/bedroom_sensor.ino with your wifi credentials and database info, then upload into MCU.
+**Firmware**: Setup your cloud database, install [4-5] and modify `Arduino/bedroom_sensor.ino` with your wifi credentials and database info, then upload into MCU.
 
 At this point, the device should be sending measurements to the DB server.
 
@@ -35,4 +35,4 @@ At this point, the device should be sending measurements to the DB server.
 
 **Monitoring**: Access [dashboard](https://us-west-2-1.aws.cloud2.influxdata.com/orgs/0663d579077b3eb6/dashboards/07adfaa51af92000?lower=now%28%29%20-%201h):
 
-<img src="img/dashboard.jpeg" width="450" />
+<img src="img/dashboard.PNG" width="450" />
