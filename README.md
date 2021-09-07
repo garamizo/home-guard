@@ -35,4 +35,4 @@ At this point, the device should be sending measurements to the DB server.
 
 **Monitoring**: Access [dashboard](https://us-west-2-1.aws.cloud2.influxdata.com/orgs/0663d579077b3eb6/dashboards/07adfaa51af92000?lower=now%28%29%20-%201h):
 
-<img src="img/dashboard.PNG" width="450" />
+<img src="img/dashboard_influxdb.PNG" width="600" />
